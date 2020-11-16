@@ -26,7 +26,7 @@ batch_size = 64
 path ='/GTSRB_data/'
 #path = 'G:/My Drive/A-Courses-PhD/Term_17_Fall2020/CS498-DL/assignments/Project/Explainable_GTSRB/GTSRB_data'
 num_classes = len(My_classes)
-
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 #===========Functions
 
 def train_classifier(train_loader, classifier, criterion, optimizer):
