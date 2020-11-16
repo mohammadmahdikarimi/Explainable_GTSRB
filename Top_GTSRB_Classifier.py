@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 from classifier import SimpleClassifier, Classifier, Classifier_moreConv#, AlexNet
 from dataloader import MyDataset, My_classes
 from sklearn.model_selection import train_test_split
-from Classifier_functions import train_classifier, test_classifier, plot_losses, plot_mAP, train, get_lr
 from pprint import pprint
 import sys
 import argparse
