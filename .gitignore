@@ -1,0 +1,25 @@
+GTSRB_data.tar
+*.tar
+*.pth
+*.ini
+
+GTSRB_data
+Meta
+PythonCode
+
+__pycache__
+.ipynb_checkpoints
+
+eval_voc.py
+
+GTSRB_Train-BlueCircles.ipynb
+GTSRB_Train-Shapes.ipynb
+GTSRB_Train-Shapes-Copy1.ipynb
+GTSRB_Train.ipynb
+
+MP3_P1B_Develop_Classifier
+
+Book1 (version 1).xlsx
+
+ngc_cmd_top.json
+ngc_Jupyterlab_test.json
