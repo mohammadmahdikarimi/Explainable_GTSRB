@@ -212,7 +212,7 @@ criterion = nn.MultiLabelSoftMarginLoss()
 
 classifier, train_losses, val_losses, train_mAPs, val_mAPs = train(classifier, num_epochs, train_loader, val_loader, criterion, optimizer, test_frequency)
 
-torch.save(classifier.state_dict(), './classifier.pth')
+torch.save(classifier.state_dict(), '/results/classifier.pth')
 f = open('/results/train_losses.txt', 'w')
 simplejson.dump(train_losses, f)
 f.close()
