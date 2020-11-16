@@ -23,8 +23,8 @@ import simplejson
 num_epochs = 20
 test_frequency = 5
 batch_size = 64
-path ='/GTSRB_data'
-path = 'G:/My Drive/A-Courses-PhD/Term_17_Fall2020/CS498-DL/assignments/Project/gtsrb-german-traffic-sign/GTSRB_data'
+path ='/GTSRB_data/'
+#path = 'G:/My Drive/A-Courses-PhD/Term_17_Fall2020/CS498-DL/assignments/Project/Explainable_GTSRB/GTSRB_data'
 num_classes = len(My_classes)
 
 #===========Functions
