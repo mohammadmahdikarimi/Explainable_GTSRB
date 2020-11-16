@@ -20,10 +20,10 @@ import simplejson
 
 
 #========Parameters
-num_epochs = 2
+num_epochs = 20
 test_frequency = 5
 batch_size = 64
-path ='/GTSRB_data/'
+path = '/GTSRB_data/'
 #path = 'G:/My Drive/A-Courses-PhD/Term_17_Fall2020/CS498-DL/assignments/Project/Explainable_GTSRB/GTSRB_data'
 num_classes = len(My_classes)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -215,7 +215,7 @@ mAP_test, test_loss, test_aps = test_classifier(test_loader, classifier, criteri
 print(mAP_test)
 
 
-paths = ['/results/', '/mnt/mkarimi/results/']
+paths = ['/results/']
 for result_path in paths:
     torch.save(classifier.state_dict(), result_path + 'classifier.pth')
     f = open(result_path + 'train_losses.txt', 'w')
