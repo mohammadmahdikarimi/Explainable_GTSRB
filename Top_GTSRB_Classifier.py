@@ -20,7 +20,7 @@ import simplejson
 
 
 #========Parameters
-num_epochs = 20
+num_epochs = 2
 test_frequency = 5
 batch_size = 64
 path ='/GTSRB_data/'
@@ -74,7 +74,7 @@ def test_classifier(test_loader, classifier, criterion, print_ind_classes=True, 
     return mAP, test_loss, aps
 
 
-def plot_losses(train, val, test_frequency, num_epochs):
+def plot_losses(train, val, test_frequency, num_epochs, result_path):
     plt.plot(train, label="train")
     indices = [i for i in range(num_epochs) if ((i + 1) % test_frequency == 0 or i == 0)]
     plt.plot(indices, val, label="val")
@@ -82,11 +82,11 @@ def plot_losses(train, val, test_frequency, num_epochs):
     plt.ylabel("Loss")
     plt.xlabel("Epoch")
     plt.legend()
-    plt.savefig('/results/plt/Losses.png')
+    plt.savefig(result_path + 'Losses.png')
     plt.show()
 
 
-def plot_mAP(train, val, test_frequency, num_epochs):
+def plot_mAP(train, val, test_frequency, num_epochs, result_path):
     indices = [i for i in range(num_epochs) if ((i + 1) % test_frequency == 0 or i == 0)]
     plt.plot(indices, train, label="train")
     plt.plot(indices, val, label="val")
@@ -94,7 +94,7 @@ def plot_mAP(train, val, test_frequency, num_epochs):
     plt.ylabel("mAP")
     plt.xlabel("Epoch")
     plt.legend()
-    plt.savefig('/results/plt/MAP.png')
+    plt.savefig(result_path + 'MAP.png')
     plt.show()
 
 
@@ -211,23 +211,26 @@ criterion = nn.MultiLabelSoftMarginLoss()
 
 classifier, train_losses, val_losses, train_mAPs, val_mAPs = train(classifier, num_epochs, train_loader, val_loader, criterion, optimizer, test_frequency)
 
-torch.save(classifier.state_dict(), '/results/classifier.pth')
-f = open('/results/train_losses.txt', 'w')
-simplejson.dump(train_losses, f)
-f.close()
-f = open('/results/val_losses.txt', 'w')
-simplejson.dump(val_losses, f)
-f.close()
-f = open('/results/train_mAPs.txt', 'w')
-simplejson.dump(train_mAPs, f)
-f.close()
-f = open('/results/val_mAPs.txt', 'w')
-simplejson.dump(val_mAPs, f)
-f.close()
-
-
-plot_losses(train_losses, val_losses, test_frequency, num_epochs)
-plot_mAP(train_mAPs, val_mAPs, test_frequency, num_epochs)
-
 mAP_test, test_loss, test_aps = test_classifier(test_loader, classifier, criterion)
 print(mAP_test)
+
+
+paths = ['/results/', '/mnt/mkarimi/results/']
+for result_path in paths:
+    torch.save(classifier.state_dict(), result_path + 'classifier.pth')
+    f = open(result_path + 'train_losses.txt', 'w')
+    simplejson.dump(train_losses, f)
+    f.close()
+    f = open(result_path + 'val_losses.txt', 'w')
+    simplejson.dump(val_losses, f)
+    f.close()
+    f = open(result_path + 'train_mAPs.txt', 'w')
+    simplejson.dump(train_mAPs, f)
+    f.close()
+    f = open(result_path + 'val_mAPs.txt', 'w')
+    simplejson.dump(val_mAPs, f)
+    f.close()
+
+    plot_losses(train_losses, val_losses, test_frequency, num_epochs, result_path)
+    plot_mAP(train_mAPs, val_mAPs, test_frequency, num_epochs, result_path)
+
