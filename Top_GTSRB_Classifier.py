@@ -16,7 +16,7 @@ import sys
 import argparse
 import time
 import simplejson
-
+import pickle
 
 
 #========Parameters
@@ -217,19 +217,24 @@ print(mAP_test)
 
 paths = ['/results/']
 for result_path in paths:
-    torch.save(classifier.state_dict(), result_path + 'classifier.pth')
-    f = open(result_path + 'train_losses.txt', 'w')
-    simplejson.dump(train_losses, f)
+    # torch.save(classifier.state_dict(), result_path + 'classifier.pth')
+    # f = open(result_path + 'train_losses.txt', 'w')
+    # simplejson.dump(train_losses, f)
+    # f.close()
+    # f = open(result_path + 'val_losses.txt', 'w')
+    # simplejson.dump(val_losses, f)
+    # f.close()
+    # f = open(result_path + 'train_mAPs.txt', 'w')
+    # simplejson.dump(train_mAPs, f)
+    # f.close()
+    # f = open(result_path + 'val_mAPs.txt', 'w')
+    # simplejson.dump(val_mAPs, f)
+    # f.close()
+
+    f = open(paths + "my_results.pkl","wb")
+    pickle.dump([train_losses, val_losses, train_mAPs, val_mAPs, classifier, test_frequency, num_epochs], f)
     f.close()
-    f = open(result_path + 'val_losses.txt', 'w')
-    simplejson.dump(val_losses, f)
-    f.close()
-    f = open(result_path + 'train_mAPs.txt', 'w')
-    simplejson.dump(train_mAPs, f)
-    f.close()
-    f = open(result_path + 'val_mAPs.txt', 'w')
-    simplejson.dump(val_mAPs, f)
-    f.close()
+
 
     plot_losses(train_losses, val_losses, test_frequency, num_epochs, result_path)
     plot_mAP(train_mAPs, val_mAPs, test_frequency, num_epochs, result_path)
