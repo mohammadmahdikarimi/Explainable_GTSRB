@@ -17,7 +17,7 @@ import csv
 
 My_classes = []
 Extended_cls = ('red', 'blue', 'black', 'circle', 'triangle',
-                  'blk cross line', 'number 2', 'number 1', 'number 0',
+                  'blk cross line', 'number 8','number 2', 'number 1', 'number 0',
                   'two cars', 'car and truck')
 for i in range(43):
     My_classes.append(str(i))
@@ -31,7 +31,7 @@ class MyDataset(data.Dataset):
         self.random_crops = random_crops
         self.dataset_split = dataset_split  #train, val, test
         self.num_trafficsigns = 43
-        self.file_Indx = file_Indx
+        self.file_Indx = file_Indx      #train/test/val are indexed from total image pool given here one by one
 
         self.__init_classes()
         self.names, self.labels, self.box_indices, self.label_order = self.__dataset_info()
@@ -40,7 +40,7 @@ class MyDataset(data.Dataset):
         # CHANGED
 #         x = imread( self.names[index], mode='RGB')
 #         x = Image.fromarray(x)
-        x = Image.open(self.names[index] )
+        x = Image.open(self.names[index])
 
         scale = np.random.rand() * 2 + 0.25
         w = int(x.size[0] * scale)
