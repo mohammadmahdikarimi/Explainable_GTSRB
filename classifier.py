@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-NUM_CLASSES = 54
+NUM_CLASSES = 55
 
 class SimpleClassifier(nn.Module):
     def __init__(self):
