@@ -173,38 +173,38 @@ def compare(train_output, train_target):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--config", required=True,
-                        help="JSON configuration string for this operation")
+    # parser.add_argument("-c", "--config", required=True,
+    #                     help="JSON configuration string for this operation")
+    parser.add_argument("-ep", "--num_epochs", required=True, default=20,
+                        help="number of epochs")
+    parser.add_argument("-tf", "--test_frequency", required=True, default=5,
+                        help="test frequency")
+    parser.add_argument("-bs", "--batch_size", required=True, default=64,
+                        help="Batch size")
+    parser.add_argument("-dp", "--data_path", required=True, default='/GTSRB_data/',
+                        help="data path. in NGC /<data mount point>")
+    parser.add_argument("-rp", "--result_path", required=True, default='/results/',
+                        help="result path. in NGC /results")
+    parser.add_argument("-m", "--Mode", required=True, default='train',
+                        help="Mode of operation: train-pretrain-analysis")
     # Grab the Arguments
-    args = parser.parse_args()
-    args.config = args.config.replace("\'", "\"")
-    conf_data = json.loads(unquote(args.config))
-
-    #parser = OptionParser()
-    #parser.add_option("-f", "--file", dest="my_json",
-                      # help="write report to FILE")
-
-
-    # (options, args) = parser.parse_args()
-    # inp_var = options.my_json
+    conf_data = parser.parse_args()
+    # args.config = args.config.replace("\'", "\"")
+    # conf_data = json.loads(unquote(args.config))
 
 
     # ========Input parameters
     # path = os.getcwd()
     # print('The os.getcwd(): ', path)
-    # f = open("{}\{}".format(path, inp_var),'rb')
-    # conf_data = json.load(f)
-    # f.close()
 
-    num_epochs = conf_data['num_epochs']
-    test_frequency = conf_data['test_frequency']
-    batch_size = conf_data['batch_size']
-    data_path = conf_data['data_path']
+    test_frequency = int(conf_data.test_frequency)
+    batch_size = int(conf_data.batch_size)
+    data_path = conf_data.data_path
+    result_path = conf_data.result_path
+    Mode = conf_data.Mode
+
     num_classes = len(My_classes)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    result_path = conf_data['result_path']
-    Mode = conf_data['Mode']
-
 
 
     if Mode == 'train':
