@@ -127,10 +127,10 @@ if __name__ == "__main__":
                 transforms.ToTensor(),
                 normalize
             ])
-
+    path = os.getcwd()
     # Randomize the order of the input images
     s = np.arange(39209)
     np.random.seed(43)
     np.random.shuffle(s)
-    ds_train = MyDataset('G:/My Drive/A-Courses-PhD/Term_17_Fall2020/CS498-DL/assignments/Project/gtsrb-german-traffic-sign/GTSRB_data/','Train',train_transform, s)
+    ds_train = MyDataset(path + '/GTSRB_data/' ,'Train',train_transform, s)
     print('this')

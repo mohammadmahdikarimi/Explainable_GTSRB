@@ -21,18 +21,6 @@ import json
 from optparse import OptionParser
 from urllib.parse import unquote
 
-#========Parameters
-num_epochs = 20
-test_frequency = 5
-batch_size = 64
-data_path = '/GTSRB_data/'
-#path = 'G:/My Drive/A-Courses-PhD/Term_17_Fall2020/CS498-DL/assignments/Project/Explainable_GTSRB/GTSRB_data'
-num_classes = len(My_classes)
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-result_path = ['/results/']
-#=========Mode of operation
-#Mode = 'train'
-#Mode = 'pre-trained'
 
 
 #===========Functions
@@ -67,7 +55,7 @@ def test_classifier(test_loader, classifier, criterion, print_ind_classes=True, 
             losses.append(loss.item())
         aps = []
         # ignore first class which is background
-        for i in range(1, y_true.shape[1]):
+        for i in range(0, y_true.shape[1]):
             ap = average_precision_score(y_true[:, i], y_score[:, i])
             if print_ind_classes:
                 print('-------  Class: {:<12}     AP: {:>8.4f}  -------'.format(My_classes[i], ap))
@@ -196,7 +184,7 @@ if __name__ == "__main__":
     # ========Input parameters
     # path = os.getcwd()
     # print('The os.getcwd(): ', path)
-
+    num_epochs = int(conf_data.num_epochs)
     test_frequency = int(conf_data.test_frequency)
     batch_size = int(conf_data.batch_size)
     data_path = conf_data.data_path
@@ -234,17 +222,19 @@ if __name__ == "__main__":
 
         #TRAIN DATA
         s=np.arange(39209)      # total number of training data is 39209
-        s_train, s_val = train_test_split(s, test_size=0.25, random_state=1)
+
+        s_train, s_val = train_test_split(s, test_size=0.35, random_state=1)
+
         #s_train, s_test = train_test_split(s_train, test_size=0.25, random_state=1)
 
-        ds_train = MyDataset(path,'Train',train_transform, s_train)
-        ds_val = MyDataset(path,'Train',train_transform, s_val)
+        ds_train = MyDataset(data_path,'Train',train_transform, s_train)
+        ds_val = MyDataset(data_path,'Train',train_transform, s_val)
 
         # TEST DATA
         s=np.arange(12630)      #total number of test data is 12630
         #np.random.seed(43)
         #np.random.shuffle(s)
-        ds_test = MyDataset(path,'Test',train_transform, s)
+        ds_test = MyDataset(data_path,'Test',train_transform, s)
         print(ds_train.names.shape)
         print(ds_val.names.shape)
         print(ds_test.names.shape)
