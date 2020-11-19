@@ -9,7 +9,8 @@ import torch.utils.data as data
 from PIL import Image
 import xml.etree.ElementTree as ET
 import csv
-
+cwd = os.getcwd()
+#print(os.path.join(cwd , 'ex_cls.csv'))
 #import cv2
 
 #import matplotlib.pyplot as plt
@@ -18,7 +19,7 @@ import csv
 My_classes = []
 Extended_cls = ('red', 'blue', 'black', 'circle', 'triangle',
                   'blk cross line', 'number 8','number 2', 'number 1', 'number 0',
-                  'two cars', 'car and truck')
+                  'car and truck', 'two cars')
 for i in range(43):
     My_classes.append(str(i))
 for i in Extended_cls:
@@ -74,7 +75,7 @@ class MyDataset(data.Dataset):
         class_map = dict()
         for i in range(43):
             class_map[str(i)] = []
-        with open(self.data_path + '/ImageSets/Main/ex_cls.csv') as csv_file:
+        with open(os.path.join(cwd , 'top_ex_cls.csv')) as csv_file:
             csv_reader = csv.reader(csv_file)
             for i, line in enumerate(csv_reader):
                 if i !=0:
@@ -107,7 +108,8 @@ class MyDataset(data.Dataset):
                 x2 = float(line['Roi.X2']) - 1
                 y2 = float(line['Roi.Y2']) - 1
                 img['box'].append([x1, y1, x2, y2])
-
+                if line['ClassId'] == 'car and truck':
+                    print('this')
                 img['label_order'].append(class_map[line['ClassId']])
 
                 lbl = np.zeros(self.num_classes)
